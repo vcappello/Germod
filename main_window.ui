@@ -1,0 +1,681 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+	<!-- <requires lib="gtk+" version="2.16" /> -->
+	<object class="GtkUIManager" id="uiman">
+		<child>
+			<object class="GtkActionGroup" id="menu_actiongroup">
+				<child>
+					<object class="GtkAction" id="file_action">
+						<property name="label">_File</property>
+					</object>
+				</child>
+				<child>
+					<object class="GtkAction" id="file_new_action">
+						<property name="stock_id">gtk-new</property>
+					</object>
+				</child>
+				<child>
+					<object class="GtkAction" id="file_open_action">
+						<property name="stock_id">gtk-open</property>
+					</object>
+				</child>
+				<child>
+					<object class="GtkAction" id="file_save_action">
+						<property name="stock_id">gtk-save</property>
+					</object>
+				</child>
+				<child>
+					<object class="GtkAction" id="file_save_as_action">
+						<property name="stock_id">gtk-save-as</property>
+					</object>
+				</child>
+				<child>
+					<object class="GtkAction" id="file_save_a_copy">
+						<property name="label">Save a Copy...</property>
+					</object>
+				</child>
+				<child>
+					<object class="GtkAction" id="file_revert_to_saved">
+						<property name="stock_id">gtk-revert-to-saved</property>
+					</object>
+				</child>
+				<child>
+					<object class="GtkAction" id="file_close_action">
+						<property name="stock_id">gtk-close</property>
+					</object>
+				</child>
+				<child>
+					<object class="GtkAction" id="file_exit_action">
+						<property name="stock_id">gtk-quit</property>
+					</object>
+				</child>
+				<child>
+					<object class="GtkAction" id="edit_action">
+						<property name="label">_Edit</property>
+					</object>
+				</child>
+				<child>
+					<object class="GtkAction" id="edit_undo_action">
+						<property name="stock_id">gtk-undo</property>
+					</object>
+					<accelerator key="z" modifiers="GDK_CONTROL_MASK"/>
+				</child>
+				<child>
+					<object class="GtkAction" id="edit_redo_action">
+						<property name="stock_id">gtk-redo</property>
+					</object>
+					<accelerator key="z" modifiers="GDK_SHIFT_MASK | GDK_CONTROL_MASK"/>
+				</child>
+				<child>
+					<object class="GtkAction" id="edit_cut_action">
+						<property name="stock_id">gtk-cut</property>
+					</object>
+				</child>
+				<child>
+					<object class="GtkAction" id="edit_copy_action">
+						<property name="stock_id">gtk-copy</property>
+					</object>
+				</child>
+				<child>
+					<object class="GtkAction" id="edit_paste_action">
+						<property name="stock_id">gtk-paste</property>
+					</object>
+				</child>
+				<child>
+					<object class="GtkAction" id="edit_delete_action">
+						<property name="stock_id">gtk-delete</property>
+					</object>
+					<accelerator key="Delete"/>
+				</child>
+			</object>
+		</child>
+		<ui>
+			<menubar name="main_menubar">
+				<menu name="file" action="file_action">
+					<menuitem action="file_new_action" />
+					<menuitem action="file_open_action" />
+					<separator />
+					<menuitem action="file_save_action" />
+					<menuitem action="file_save_as_action" />
+					<menuitem action="file_save_a_copy" />
+					<menuitem action="file_revert_to_saved" />
+					<separator />
+					<menuitem action="file_close_action" />
+					<menuitem action="file_exit_action" />
+				</menu>
+				<menu name="edit" action="edit_action">
+					<menuitem action="edit_undo_action" />
+					<menuitem action="edit_redo_action" />
+					<separator />
+					<menuitem action="edit_cut_action" />
+					<menuitem action="edit_copy_action" />
+					<menuitem action="edit_paste_action" />
+					<menuitem action="edit_delete_action" />
+				</menu>
+			</menubar>
+		</ui>
+	</object>
+
+	<object class="GtkActionGroup" id="tools_actiongroup">
+		<child>
+			<object class="GtkToggleAction" id="selection_toggleaction">
+				<property name="label">Selection</property>
+				<property name="icon_name">mouse_cursor</property>
+				<property name="active">True</property>
+			</object>
+		</child>
+	</object>
+	<object class="GtkActionGroup" id="text_actiongroup">
+		<child>
+			<object class="GtkToggleAction" id="text_bold_toggleaction">
+				<property name="stock_id">gtk-bold</property>
+			</object>
+		</child>
+		<child>
+			<object class="GtkToggleAction" id="text_italic_toggleaction">
+				<property name="stock_id">gtk-italic</property>
+			</object>
+		</child>
+		<child>
+			<object class="GtkToggleAction" id="text_underline_toggleaction">
+				<property name="stock_id">gtk-underline</property>
+			</object>
+		</child>
+	</object>
+
+	<object class="GtkWindow" id="main_window">
+		<property name="can_focus">False</property>
+		<child>
+			<object class="GtkVBox" id="top_vbox">
+				<property name="visible">True</property>
+				<property name="can_focus">False</property>
+				<child>
+					<object class="GtkMenuBar" id="main_menubar" constructor="uiman" />
+					<packing>
+						<property name="expand">False</property>
+						<property name="fill">True</property>
+						<property name="position">0</property>
+					</packing>
+				</child>
+				<child>
+					<object class="GtkHBox" id="hbox2">
+						<property name="visible">True</property>
+						<property name="can_focus">False</property>
+						<child>
+							<object class="GtkToolbar" id="edit_toolbar">
+								<property name="visible">True</property>
+								<property name="can_focus">False</property>
+								<property name="show_arrow">False</property>
+								<child>
+									<object class="GtkToolButton" id="file_new_toolbutton">
+										<property name="visible">True</property>
+										<property name="can_focus">False</property>
+										<property name="related_action">file_new_action</property>
+										<property name="label" translatable="yes">toolbutton1
+										</property>
+										<property name="use_underline">True</property>
+									</object>
+									<packing>
+										<property name="expand">False</property>
+										<property name="homogeneous">True</property>
+									</packing>
+								</child>
+								<child>
+									<object class="GtkToolButton" id="file_open_toolbutton">
+										<property name="visible">True</property>
+										<property name="can_focus">False</property>
+										<property name="related_action">file_open_action</property>
+										<property name="label" translatable="yes">toolbutton1
+										</property>
+										<property name="use_underline">True</property>
+									</object>
+									<packing>
+										<property name="expand">False</property>
+										<property name="homogeneous">True</property>
+									</packing>
+								</child>
+								<child>
+									<object class="GtkToolButton" id="file_save_toolbutton">
+										<property name="visible">True</property>
+										<property name="can_focus">False</property>
+										<property name="related_action">file_save_action</property>
+										<property name="label" translatable="yes">toolbutton1
+										</property>
+										<property name="use_underline">True</property>
+									</object>
+									<packing>
+										<property name="expand">False</property>
+										<property name="homogeneous">True</property>
+									</packing>
+								</child>
+								<child>
+									<object class="GtkSeparatorToolItem" id="separator1_toolbutton">
+										<property name="visible">True</property>
+										<property name="can_focus">False</property>
+									</object>
+									<packing>
+										<property name="expand">False</property>
+										<property name="homogeneous">True</property>
+									</packing>
+								</child>
+								<child>
+									<object class="GtkToolButton" id="undo_toolbutton">
+										<property name="visible">True</property>
+										<property name="can_focus">False</property>
+										<property name="related_action">edit_undo_action</property>
+										<property name="label" translatable="yes">toolbutton2
+										</property>
+										<property name="use_underline">True</property>
+									</object>
+									<packing>
+										<property name="expand">False</property>
+										<property name="homogeneous">True</property>
+									</packing>
+								</child>
+								<child>
+									<object class="GtkToolButton" id="redo_toolbutton">
+										<property name="visible">True</property>
+										<property name="can_focus">False</property>
+										<property name="related_action">edit_redo_action</property>
+										<property name="label" translatable="yes">toolbutton2
+										</property>
+										<property name="use_underline">True</property>
+									</object>
+									<packing>
+										<property name="expand">False</property>
+										<property name="homogeneous">True</property>
+									</packing>
+								</child>
+								<child>
+									<object class="GtkSeparatorToolItem" id="toolbutton1">
+										<property name="visible">True</property>
+										<property name="can_focus">False</property>
+										<property name="use_action_appearance">False</property>
+									</object>
+									<packing>
+										<property name="expand">False</property>
+										<property name="homogeneous">True</property>
+									</packing>
+								</child>
+								<child>
+									<object class="GtkToolButton" id="cut_toolbutton">
+										<property name="visible">True</property>
+										<property name="can_focus">False</property>
+										<property name="related_action">edit_cut_action</property>
+										<property name="label" translatable="yes">toolbutton2
+										</property>
+										<property name="use_underline">True</property>
+									</object>
+									<packing>
+										<property name="expand">False</property>
+										<property name="homogeneous">True</property>
+									</packing>
+								</child>
+								<child>
+									<object class="GtkToolButton" id="copy_toolbutton">
+										<property name="visible">True</property>
+										<property name="can_focus">False</property>
+										<property name="related_action">edit_copy_action</property>
+										<property name="label" translatable="yes">toolbutton1
+										</property>
+										<property name="use_underline">True</property>
+									</object>
+									<packing>
+										<property name="expand">False</property>
+										<property name="homogeneous">True</property>
+									</packing>
+								</child>
+								<child>
+									<object class="GtkToolButton" id="paste_toolbutton">
+										<property name="visible">True</property>
+										<property name="can_focus">False</property>
+										<property name="related_action">edit_paste_action</property>
+										<property name="label" translatable="yes">toolbutton1
+										</property>
+										<property name="use_underline">True</property>
+									</object>
+									<packing>
+										<property name="expand">False</property>
+										<property name="homogeneous">True</property>
+									</packing>
+								</child>
+							</object>
+							<packing>
+								<property name="expand">False</property>
+								<property name="fill">True</property>
+								<property name="position">0</property>
+							</packing>
+						</child>
+						<child>
+							<object class="GtkToolbar" id="stroke_fill_format_toolbar">
+								<property name="visible">True</property>
+								<property name="can_focus">False</property>
+								<property name="toolbar_style">icons</property>
+								<property name="show_arrow">False</property>
+								<child>
+									<object class="GtkMenuToolButton" id="line_color_menu_toolbutton">
+										<property name="visible">True</property>
+										<property name="can_focus">False</property>
+										<property name="use_action_appearance">False</property>
+										<property name="label" translatable="yes">toolbutton1
+										</property>
+										<property name="use_underline">True</property>
+									</object>
+									<packing>
+										<property name="expand">False</property>
+										<property name="homogeneous">True</property>
+									</packing>
+								</child>
+								<child>
+									<object class="GtkMenuToolButton" id="line_width_menu_toolbutton">
+										<property name="visible">True</property>
+										<property name="can_focus">False</property>
+										<property name="use_action_appearance">False</property>
+										<property name="label" translatable="yes">toolbutton1
+										</property>
+										<property name="use_underline">True</property>
+									</object>
+									<packing>
+										<property name="expand">False</property>
+										<property name="homogeneous">True</property>
+									</packing>
+								</child>
+								<child>
+									<object class="GtkMenuToolButton" id="dash_style_menu_toolbutton">
+										<property name="visible">True</property>
+										<property name="can_focus">False</property>
+										<property name="use_action_appearance">False</property>
+										<property name="label" translatable="yes">toolbutton1
+										</property>
+										<property name="use_underline">True</property>
+									</object>
+									<packing>
+										<property name="expand">False</property>
+										<property name="homogeneous">True</property>
+									</packing>
+								</child>
+								<child>
+									<object class="GtkMenuToolButton" id="fill_color_menu_toolbutton">
+										<property name="visible">True</property>
+										<property name="can_focus">False</property>
+										<property name="use_action_appearance">False</property>
+										<property name="label" translatable="yes">toolbutton1
+										</property>
+										<property name="use_underline">True</property>
+									</object>
+									<packing>
+										<property name="expand">False</property>
+										<property name="homogeneous">True</property>
+									</packing>
+								</child>
+							</object>
+							<packing>
+								<property name="expand">True</property>
+								<property name="fill">True</property>
+								<property name="position">1</property>
+							</packing>
+						</child>
+					</object>
+					<packing>
+						<property name="expand">False</property>
+						<property name="fill">True</property>
+						<property name="position">1</property>
+					</packing>
+				</child>
+				<child>
+					<object class="GtkHBox" id="hbox1">
+						<property name="visible">True</property>
+						<property name="can_focus">False</property>
+						<child>
+							<object class="GtkToolbar" id="text_format_toolbar">
+								<property name="visible">True</property>
+								<property name="can_focus">False</property>
+								<property name="toolbar_style">icons</property>
+								<property name="show_arrow">False</property>
+								<child>
+									<object class="GtkToolItem" id="text_font_toolbutton">
+										<property name="visible">True</property>
+										<property name="can_focus">False</property>
+										<property name="use_action_appearance">False</property>
+										<child>
+											<object class="GtkComboBox" id="text_font_combobox">
+												<property name="visible">True</property>
+												<property name="can_focus">False</property>
+												<property name="focus_on_click">False</property>
+											</object>
+										</child>
+									</object>
+									<packing>
+										<property name="expand">False</property>
+									</packing>
+								</child>
+								<child>
+									<object class="GtkToolItem" id="text_font_size_toolbutton">
+										<property name="visible">True</property>
+										<property name="can_focus">False</property>
+										<property name="use_action_appearance">False</property>
+										<child>
+											<object class="GtkComboBox" id="text_font_size_combobox">
+												<property name="visible">True</property>
+												<property name="can_focus">False</property>
+												<property name="margin_left">6</property>
+												<property name="margin_right">6</property>
+												<property name="focus_on_click">False</property>
+											</object>
+										</child>
+									</object>
+									<packing>
+										<property name="expand">False</property>
+									</packing>
+								</child>
+								<child>
+									<object class="GtkToggleToolButton" id="text_bold_toolbutton">
+										<property name="visible">True</property>
+										<property name="can_focus">False</property>
+										<property name="related_action">text_bold_toggleaction</property>
+										<property name="label" translatable="yes">toolbutton1
+										</property>
+										<property name="use_underline">True</property>
+									</object>
+									<packing>
+										<property name="expand">False</property>
+										<property name="homogeneous">True</property>
+									</packing>
+								</child>
+								<child>
+									<object class="GtkToggleToolButton" id="text_italic_toolbutton">
+										<property name="visible">True</property>
+										<property name="can_focus">False</property>
+										<property name="related_action">text_italic_toggleaction</property>
+										<property name="label" translatable="yes">toolbutton1
+										</property>
+										<property name="use_underline">True</property>
+									</object>
+									<packing>
+										<property name="expand">False</property>
+										<property name="homogeneous">True</property>
+									</packing>
+								</child>
+								<child>
+									<object class="GtkToggleToolButton" id="text_underline_toolbutton">
+										<property name="visible">True</property>
+										<property name="can_focus">False</property>
+										<property name="related_action">text_underline_toggleaction</property>
+										<property name="label" translatable="yes">toolbutton1
+										</property>
+										<property name="use_underline">True</property>
+									</object>
+									<packing>
+										<property name="expand">False</property>
+										<property name="homogeneous">True</property>
+									</packing>
+								</child>
+								<child>
+									<object class="GtkMenuToolButton" id="text_color_menu_toolbutton">
+										<property name="visible">True</property>
+										<property name="can_focus">False</property>
+										<property name="use_action_appearance">False</property>
+										<property name="use_underline">True</property>
+									</object>
+									<packing>
+										<property name="expand">False</property>
+										<property name="homogeneous">True</property>
+									</packing>
+								</child>
+								<child>
+									<object class="GtkMenuToolButton" id="text_backcolor_menu_toolbutton">
+										<property name="visible">True</property>
+										<property name="can_focus">False</property>
+										<property name="use_action_appearance">False</property>
+										<property name="use_underline">True</property>
+									</object>
+									<packing>
+										<property name="expand">False</property>
+										<property name="homogeneous">True</property>
+									</packing>
+								</child>
+							</object>
+							<packing>
+								<property name="expand">True</property>
+								<property name="fill">True</property>
+								<property name="position">0</property>
+							</packing>
+						</child>
+						<child>
+							<placeholder />
+						</child>
+					</object>
+					<packing>
+						<property name="expand">False</property>
+						<property name="fill">True</property>
+						<property name="position">2</property>
+					</packing>
+				</child>
+				<child>
+					<object class="GtkHPaned" id="workspace_hpaned">
+						<property name="visible">True</property>
+						<property name="can_focus">True</property>
+						<child>
+							<object class="GtkVBox" id="tools_filter_vbox">
+								<property name="visible">True</property>
+								<property name="can_focus">False</property>
+								<property name="border_width">6</property>
+								<child>
+									<object class="GtkToggleButton" id="selection_tool_togglebutton">
+										<property name="visible">True</property>
+										<property name="can_focus">True</property>
+										<property name="receives_default">True</property>
+										<property name="related_action">selection_toggleaction</property>
+										<property name="use_action_appearance">False</property>
+										<child>
+											<object class="GtkBox" id="box1">
+												<property name="visible">True</property>
+												<property name="can_focus">False</property>
+												<child>
+													<object class="GtkImage" id="image1">
+														<property name="visible">True</property>
+														<property name="can_focus">False</property>
+														<property name="pixbuf">cursor.png</property>
+													</object>
+													<packing>
+														<property name="expand">False</property>
+														<property name="fill">True</property>
+														<property name="position">0</property>
+													</packing>
+												</child>
+												<child>
+													<object class="GtkLabel" id="label1">
+														<property name="visible">True</property>
+														<property name="can_focus">False</property>
+														<property name="label" translatable="yes">Selection
+														</property>
+													</object>
+													<packing>
+														<property name="expand">False</property>
+														<property name="fill">True</property>
+														<property name="padding">6</property>
+														<property name="position">1</property>
+													</packing>
+												</child>
+											</object>
+										</child>
+									</object>
+									<packing>
+										<property name="expand">False</property>
+										<property name="fill">True</property>
+										<property name="position">0</property>
+									</packing>
+								</child>
+								<child>
+									<object class="GtkHSeparator" id="hseparator1">
+										<property name="visible">True</property>
+										<property name="can_focus">False</property>
+									</object>
+									<packing>
+										<property name="expand">False</property>
+										<property name="fill">True</property>
+										<property name="padding">3</property>
+										<property name="position">1</property>
+									</packing>
+								</child>
+								<child>
+									<object class="GtkLabel" id="tools_filter_label">
+										<property name="visible">True</property>
+										<property name="can_focus">False</property>
+										<property name="xalign">0</property>
+										<property name="label" translatable="yes">Tools filter:
+										</property>
+									</object>
+									<packing>
+										<property name="expand">False</property>
+										<property name="fill">True</property>
+										<property name="padding">3</property>
+										<property name="position">2</property>
+									</packing>
+								</child>
+								<child>
+									<object class="GtkEntry" id="tools_filter_entry">
+										<property name="visible">True</property>
+										<property name="can_focus">True</property>
+										<property name="invisible_char">●</property>
+										<property name="primary_icon_stock">gtk-find</property>
+										<property name="secondary_icon_stock">gtk-clear</property>
+										<property name="primary_icon_activatable">False</property>
+										<property name="secondary_icon_activatable">False</property>
+									</object>
+									<packing>
+										<property name="expand">False</property>
+										<property name="fill">True</property>
+										<property name="padding">3</property>
+										<property name="position">3</property>
+									</packing>
+								</child>
+								<child>
+									<object class="GtkScrolledWindow" id="tools_scrolledwindow">
+										<property name="visible">True</property>
+										<property name="can_focus">True</property>
+										<child>
+											<object class="GtkIconView" id="tools_iconview">
+												<property name="visible">True</property>
+												<property name="can_focus">True</property>
+											</object>
+										</child>
+									</object>
+									<packing>
+										<property name="expand">True</property>
+										<property name="fill">True</property>
+										<property name="position">4</property>
+									</packing>
+								</child>
+							</object>
+							<packing>
+								<property name="resize">False</property>
+								<property name="shrink">True</property>
+							</packing>
+						</child>
+						<child>
+							<object class="GtkNotebook" id="diagrams_notebook">
+								<property name="visible">True</property>
+								<property name="can_focus">True</property>
+							</object>
+							<packing>
+								<property name="resize">True</property>
+								<property name="shrink">True</property>
+							</packing>
+						</child>
+					</object>
+					<packing>
+						<property name="expand">True</property>
+						<property name="fill">True</property>
+						<property name="position">3</property>
+					</packing>
+				</child>
+				<child>
+					<object class="GtkStatusbar" id="main_statusbar">
+						<property name="visible">True</property>
+						<property name="can_focus">False</property>
+						<property name="spacing">2</property>
+						<child>
+							<object class="GtkLabel" id="current_status_label">
+								<property name="visible">True</property>
+								<property name="can_focus">False</property>
+								<property name="xalign">0</property>
+								<property name="label" translatable="yes">label</property>
+							</object>
+							<packing>
+								<property name="expand">True</property>
+								<property name="fill">True</property>
+								<property name="position">0</property>
+							</packing>
+						</child>
+					</object>
+					<packing>
+						<property name="expand">False</property>
+						<property name="fill">True</property>
+						<property name="position">4</property>
+					</packing>
+				</child>
+			</object>
+		</child>
+	</object>
+</interface>
