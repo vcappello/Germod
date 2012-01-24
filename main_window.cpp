@@ -214,6 +214,9 @@ MainWindow::MainWindow(BaseObjectType* cobject, const Glib::RefPtr<Gtk::Builder>
 	cppgef::CommandManager::getInstance()->signalCommandRedo().connect (
 			sigc::mem_fun( *this, &MainWindow::onCommandManagerCommandRedo ));
 
+	cppgef::CommandManager::getInstance()->signalReachedSavedState().connect (
+			sigc::mem_fun( *this, &MainWindow::onCommandManagerReachedSavedState ));
+
 	// Open an empty diagram
 	appendNotebookPage("");
 	
@@ -295,6 +298,9 @@ void MainWindow::onFileSaveAction()
 	if (active_diagram_editor->hasFile())
 	{
 		active_diagram_editor->save();
+
+		shared_ptr< cppgef::Diagram > diagram = dynamic_pointer_cast< cppgef::Diagram >(active_diagram_editor->getDiagramEditPart()->getModel());
+		diagrams_notebook_->setNotebookPageDirty (diagrams_notebook_->get_current_page(), !(cppgef::CommandManager::getInstance()->isReachedSavedState (diagram)));
 	}
 	else
 	{
@@ -658,7 +664,11 @@ void MainWindow::promptSaveDiagram(DiagramEditor* diagram_editor, bool copy)
 			else
 			{
 				diagram_editor->save (dialog.get_filename());
+
+				shared_ptr< cppgef::Diagram > diagram = dynamic_pointer_cast< cppgef::Diagram >(diagram_editor->getDiagramEditPart()->getModel());
 				diagrams_notebook_->setNotebookPageTitle (diagrams_notebook_->get_current_page(), dialog.get_filename());
+				diagrams_notebook_->setNotebookPageDirty (diagrams_notebook_->get_current_page(), !(cppgef::CommandManager::getInstance()->isReachedSavedState (diagram)));
+
 			}
 		}
 		catch (const std::exception& e)
@@ -987,7 +997,7 @@ void MainWindow::onCommandManagerCommandExecute(shared_ptr< cppgef::Diagram > di
 		edit_undo_action_->set_sensitive (!(cppgef::CommandManager::getInstance()->isUndoStackEmpty (diagram)));
 		edit_redo_action_->set_sensitive (!(cppgef::CommandManager::getInstance()->isRedoStackEmpty (diagram)));
 
-		diagrams_notebook_->setNotebookPageDirty (page_num, !(cppgef::CommandManager::getInstance()->isUndoStackEmpty (diagram)));
+		diagrams_notebook_->setNotebookPageDirty (page_num, !(cppgef::CommandManager::getInstance()->isReachedSavedState (diagram)));
 	}
 }
 
@@ -1000,7 +1010,7 @@ void MainWindow::onCommandManagerCommandUndo(shared_ptr< cppgef::Diagram > diagr
 		edit_undo_action_->set_sensitive (!(cppgef::CommandManager::getInstance()->isUndoStackEmpty (diagram)));
 		edit_redo_action_->set_sensitive (!(cppgef::CommandManager::getInstance()->isRedoStackEmpty (diagram)));
 
-		diagrams_notebook_->setNotebookPageDirty (page_num, !(cppgef::CommandManager::getInstance()->isUndoStackEmpty (diagram)));
+		diagrams_notebook_->setNotebookPageDirty (page_num, !(cppgef::CommandManager::getInstance()->isReachedSavedState (diagram)));
 	}
 }
 
@@ -1013,8 +1023,13 @@ void MainWindow::onCommandManagerCommandRedo(shared_ptr< cppgef::Diagram > diagr
 		edit_undo_action_->set_sensitive (!(cppgef::CommandManager::getInstance()->isUndoStackEmpty (diagram)));
 		edit_redo_action_->set_sensitive (!(cppgef::CommandManager::getInstance()->isRedoStackEmpty (diagram)));
 
-		diagrams_notebook_->setNotebookPageDirty (page_num, !(cppgef::CommandManager::getInstance()->isUndoStackEmpty (diagram)));
+		diagrams_notebook_->setNotebookPageDirty (page_num, !(cppgef::CommandManager::getInstance()->isReachedSavedState (diagram)));
 	}
+}
+
+void MainWindow::onCommandManagerReachedSavedState(shared_ptr< cppgef::Diagram > diagram)
+{
+
 }
 
 

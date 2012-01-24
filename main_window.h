@@ -157,6 +157,7 @@ private:
 	void onCommandManagerCommandExecute(shared_ptr< cppgef::Diagram > diagram);
 	void onCommandManagerCommandUndo(shared_ptr< cppgef::Diagram > diagram);
 	void onCommandManagerCommandRedo(shared_ptr< cppgef::Diagram > diagram);
+	void onCommandManagerReachedSavedState(shared_ptr< cppgef::Diagram > diagram);
 };
 
 #endif /* MAINWINDOW_H_ */
