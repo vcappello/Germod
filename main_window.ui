@@ -87,6 +87,12 @@
 					</object>
 					<accelerator key="Delete"/>
 				</child>
+				<child>
+					<object class="GtkAction" id="edit_select_all_action">
+						<property name="stock_id">gtk-select-all</property>
+					</object>
+					<accelerator key="a" modifiers="GDK_CONTROL_MASK"/>
+				</child>
 			</object>
 		</child>
 		<ui>
@@ -111,6 +117,8 @@
 					<menuitem action="edit_copy_action" />
 					<menuitem action="edit_paste_action" />
 					<menuitem action="edit_delete_action" />
+					<separator />
+					<menuitem action="edit_select_all_action" />
 				</menu>
 			</menubar>
 		</ui>

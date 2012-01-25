@@ -67,6 +67,7 @@ protected:
 	Glib::RefPtr< Gtk::Action > edit_delete_action_;
 	Glib::RefPtr< Gtk::Action > edit_copy_action_;
 	Glib::RefPtr< Gtk::Action > edit_paste_action_;
+	Glib::RefPtr< Gtk::Action > edit_select_all_action_;
 
 	Glib::RefPtr< Gtk::ActionGroup > text_actiongroup_;
 	Glib::RefPtr< Gtk::ToggleAction > text_bold_action_;
@@ -104,6 +105,7 @@ private:
 	void onEditDeleteAction();
 	void onEditUndoAction();
 	void onEditRedoAction();
+	void onEditSelectAllAction();
 	
 	void onTextBoldAction();
 	void onTextItalicAction();

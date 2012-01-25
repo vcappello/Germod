@@ -104,6 +104,11 @@ void DiagramEditor::clearSelection()
 	diagram_edit_part_->clearSelection();
 }
 
+void DiagramEditor::selectAll()
+{
+	diagram_edit_part_->selectAll();
+}
+
 shared_ptr< cppgef::DiagramEditPart > DiagramEditor::getDiagramEditPart()
 {
 	return diagram_edit_part_;

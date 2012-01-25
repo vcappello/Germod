@@ -36,6 +36,7 @@ public:
 
 	virtual void activateInplaceEditor(shared_ptr< cppgef::IInplaceEditor > editor, const cppgef::Point& point);
 	virtual void clearSelection();
+	virtual void selectAll();
 
 	shared_ptr< cppgef::DiagramEditPart > getDiagramEditPart();
 	void setDiagramEditPart (shared_ptr< cppgef::DiagramEditPart > value);

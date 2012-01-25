@@ -68,6 +68,7 @@ MainWindow::MainWindow(BaseObjectType* cobject, const Glib::RefPtr<Gtk::Builder>
 	edit_delete_action_ = Glib::RefPtr< Gtk::Action >::cast_dynamic(builder_->get_object ("edit_delete_action"));
 	edit_undo_action_ = Glib::RefPtr< Gtk::Action >::cast_dynamic(builder_->get_object ("edit_undo_action"));
 	edit_redo_action_ = Glib::RefPtr< Gtk::Action >::cast_dynamic(builder_->get_object ("edit_redo_action"));
+	edit_select_all_action_ = Glib::RefPtr< Gtk::Action >::cast_dynamic(builder_->get_object ("edit_select_all_action"));
 
 	text_actiongroup_ = Glib::RefPtr< Gtk::ActionGroup >::cast_dynamic(builder_->get_object ("text_actiongroup"));
 	text_bold_action_ = Glib::RefPtr< Gtk::ToggleAction >::cast_dynamic(builder_->get_object ("text_bold_toggleaction"));
@@ -121,6 +122,9 @@ MainWindow::MainWindow(BaseObjectType* cobject, const Glib::RefPtr<Gtk::Builder>
 
 	edit_delete_action_->signal_activate().connect (
 		sigc::mem_fun(this, &MainWindow::onEditDeleteAction));
+
+	edit_select_all_action_->signal_activate().connect (
+			sigc::mem_fun(this, &MainWindow::onEditSelectAllAction));
 
 	text_bold_action_->signal_toggled().connect (
 		sigc::mem_fun(this, &MainWindow::onTextBoldAction));
@@ -409,6 +413,16 @@ void MainWindow::onEditDeleteAction()
 		return;
 
 	active_diagram_editor->deleteSelection();
+}
+
+void MainWindow::onEditSelectAllAction()
+{
+	DiagramEditor* active_diagram_editor = getActiveDiagramEditor();
+
+	if (!active_diagram_editor)
+		return;
+
+	active_diagram_editor->selectAll();
 }
 
 void MainWindow::onTextBoldAction()
