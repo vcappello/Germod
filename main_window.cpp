@@ -77,6 +77,8 @@ MainWindow::MainWindow(BaseObjectType* cobject, const Glib::RefPtr<Gtk::Builder>
 	view_style_toolbar_toggle_action_ = Glib::RefPtr< Gtk::ToggleAction >::cast_dynamic(builder_->get_object ("view_style_toolbar_action"));
 	view_text_format_toolbar_toggle_action_ = Glib::RefPtr< Gtk::ToggleAction >::cast_dynamic(builder_->get_object ("view_text_format_toolbar_action"));
 
+	help_about_action_ =  Glib::RefPtr< Gtk::Action >::cast_dynamic(builder_->get_object ("help_about_action"));
+
 	text_actiongroup_ = Glib::RefPtr< Gtk::ActionGroup >::cast_dynamic(builder_->get_object ("text_actiongroup"));
 	text_bold_action_ = Glib::RefPtr< Gtk::ToggleAction >::cast_dynamic(builder_->get_object ("text_bold_toggleaction"));
 	text_italic_action_ = Glib::RefPtr< Gtk::ToggleAction >::cast_dynamic(builder_->get_object ("text_italic_toggleaction"));
@@ -147,6 +149,9 @@ MainWindow::MainWindow(BaseObjectType* cobject, const Glib::RefPtr<Gtk::Builder>
 
 	view_text_format_toolbar_toggle_action_->signal_toggled().connect (
 			sigc::mem_fun(this, &MainWindow::onViewTextFormatToolbarToggleAction));
+
+	help_about_action_->signal_activate().connect (
+			sigc::mem_fun(this, &MainWindow::onHelpAboutAction));
 
 	text_bold_action_->signal_toggled().connect (
 		sigc::mem_fun(this, &MainWindow::onTextBoldAction));
@@ -460,6 +465,12 @@ void MainWindow::onViewStyleToolbarToggleAction()
 void MainWindow::onViewTextFormatToolbarToggleAction()
 {
 	text_format_toolbar_->set_visible (view_text_format_toolbar_toggle_action_->get_active());
+}
+
+void MainWindow::onHelpAboutAction()
+{
+	AboutDialog about;
+	about.run();
 }
 
 void MainWindow::onTextBoldAction()

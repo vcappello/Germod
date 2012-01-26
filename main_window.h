@@ -22,6 +22,7 @@
 #include "line_width_menu_tool_button.h"
 #include "dash_style_menu_tool_button.h"
 #include "document_notebook.h"
+#include "about_dialog.h"
 
 using boost::shared_ptr;
 using boost::dynamic_pointer_cast;
@@ -76,6 +77,8 @@ protected:
 	Glib::RefPtr< Gtk::ToggleAction > view_style_toolbar_toggle_action_;
 	Glib::RefPtr< Gtk::ToggleAction > view_text_format_toolbar_toggle_action_;
 
+	Glib::RefPtr< Gtk::Action > help_about_action_;
+
 	Glib::RefPtr< Gtk::ActionGroup > text_actiongroup_;
 	Glib::RefPtr< Gtk::ToggleAction > text_bold_action_;
 	Glib::RefPtr< Gtk::ToggleAction > text_italic_action_;
@@ -117,6 +120,8 @@ private:
 	void onViewMainToolbarToggleAction();
 	void onViewStyleToolbarToggleAction();
 	void onViewTextFormatToolbarToggleAction();
+
+	void onHelpAboutAction();
 
 	void onTextBoldAction();
 	void onTextItalicAction();

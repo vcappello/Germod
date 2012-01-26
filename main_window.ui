@@ -113,6 +113,16 @@
 						<property name="label">_Text format toolbar</property>
 					</object>
 				</child>
+				<child>
+					<object class="GtkAction" id="help_action">
+						<property name="label">_Help</property>
+					</object>
+				</child>
+				<child>
+					<object class="GtkAction" id="help_about_action">
+						<property name="stock_id">gtk-about</property>
+					</object>
+				</child>
 			</object>
 		</child>
 		<ui>
@@ -144,6 +154,9 @@
 					<menuitem action="view_main_toolbar_action" />
 					<menuitem action="view_style_toolbar_action" />
 					<menuitem action="view_text_format_toolbar_action" />
+				</menu>
+				<menu name="help" action="help_action">
+					<menuitem action="help_about_action" />
 				</menu>
 			</menubar>
 		</ui>
