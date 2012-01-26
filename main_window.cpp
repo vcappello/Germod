@@ -23,6 +23,9 @@ MainWindow::MainWindow(BaseObjectType* cobject, const Glib::RefPtr<Gtk::Builder>
 	builder_->get_widget_derived ("line_width_menu_toolbutton", line_width_menu_toolbutton_);
 	builder_->get_widget_derived ("fill_color_menu_toolbutton", fill_color_menu_toolbutton_);
 	builder_->get_widget_derived("dash_style_menu_toolbutton", dash_style_menu_toolbutton_);
+	builder_->get_widget ("main_toolbar", main_toolbar_);
+	builder_->get_widget ("style_toolbar", style_toolbar_);
+	builder_->get_widget ("text_format_toolbar", text_format_toolbar_);
 
 	// Initialization	
 	current_status_label_->set_text (Glib::ustring());
@@ -70,6 +73,10 @@ MainWindow::MainWindow(BaseObjectType* cobject, const Glib::RefPtr<Gtk::Builder>
 	edit_redo_action_ = Glib::RefPtr< Gtk::Action >::cast_dynamic(builder_->get_object ("edit_redo_action"));
 	edit_select_all_action_ = Glib::RefPtr< Gtk::Action >::cast_dynamic(builder_->get_object ("edit_select_all_action"));
 
+	view_main_toolbar_toggle_action_ = Glib::RefPtr< Gtk::ToggleAction >::cast_dynamic(builder_->get_object ("view_main_toolbar_action"));
+	view_style_toolbar_toggle_action_ = Glib::RefPtr< Gtk::ToggleAction >::cast_dynamic(builder_->get_object ("view_style_toolbar_action"));
+	view_text_format_toolbar_toggle_action_ = Glib::RefPtr< Gtk::ToggleAction >::cast_dynamic(builder_->get_object ("view_text_format_toolbar_action"));
+
 	text_actiongroup_ = Glib::RefPtr< Gtk::ActionGroup >::cast_dynamic(builder_->get_object ("text_actiongroup"));
 	text_bold_action_ = Glib::RefPtr< Gtk::ToggleAction >::cast_dynamic(builder_->get_object ("text_bold_toggleaction"));
 	text_italic_action_ = Glib::RefPtr< Gtk::ToggleAction >::cast_dynamic(builder_->get_object ("text_italic_toggleaction"));
@@ -82,6 +89,12 @@ MainWindow::MainWindow(BaseObjectType* cobject, const Glib::RefPtr<Gtk::Builder>
 	Toolset::getInstance()->setActiveTool (tool);
 	
 	bindToolToDiagramEditor();
+
+	// Initialize actions
+	view_main_toolbar_toggle_action_->set_active (true);
+	view_style_toolbar_toggle_action_->set_active (true);
+	view_text_format_toolbar_toggle_action_->set_active (true);
+
 	
 	// Connect action signal handlers
 	file_new_action_->signal_activate().connect (
@@ -125,6 +138,15 @@ MainWindow::MainWindow(BaseObjectType* cobject, const Glib::RefPtr<Gtk::Builder>
 
 	edit_select_all_action_->signal_activate().connect (
 			sigc::mem_fun(this, &MainWindow::onEditSelectAllAction));
+
+	view_main_toolbar_toggle_action_->signal_toggled().connect (
+			sigc::mem_fun(this, &MainWindow::onViewMainToolbarToggleAction));
+
+	view_style_toolbar_toggle_action_->signal_toggled().connect (
+			sigc::mem_fun(this, &MainWindow::onViewStyleToolbarToggleAction));
+
+	view_text_format_toolbar_toggle_action_->signal_toggled().connect (
+			sigc::mem_fun(this, &MainWindow::onViewTextFormatToolbarToggleAction));
 
 	text_bold_action_->signal_toggled().connect (
 		sigc::mem_fun(this, &MainWindow::onTextBoldAction));
@@ -423,6 +445,21 @@ void MainWindow::onEditSelectAllAction()
 		return;
 
 	active_diagram_editor->selectAll();
+}
+
+void MainWindow::onViewMainToolbarToggleAction()
+{
+	main_toolbar_->set_visible (view_main_toolbar_toggle_action_->get_active());
+}
+
+void MainWindow::onViewStyleToolbarToggleAction()
+{
+	style_toolbar_->set_visible (view_style_toolbar_toggle_action_->get_active());
+}
+
+void MainWindow::onViewTextFormatToolbarToggleAction()
+{
+	text_format_toolbar_->set_visible (view_text_format_toolbar_toggle_action_->get_active());
 }
 
 void MainWindow::onTextBoldAction()

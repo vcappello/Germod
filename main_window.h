@@ -48,6 +48,9 @@ protected:
 	LineWidthMenuToolButton* line_width_menu_toolbutton_;
 	FillColorMenuToolButton* fill_color_menu_toolbutton_;
 	DashStyleMenuToolButton* dash_style_menu_toolbutton_;
+	Gtk::Toolbar* main_toolbar_;
+	Gtk::Toolbar* style_toolbar_;
+	Gtk::Toolbar* text_format_toolbar_;
 	
 	Glib::RefPtr< Gtk::UIManager > ui_manager_;
 	Glib::RefPtr< Gtk::ActionGroup > edit_action_group_;
@@ -68,6 +71,10 @@ protected:
 	Glib::RefPtr< Gtk::Action > edit_copy_action_;
 	Glib::RefPtr< Gtk::Action > edit_paste_action_;
 	Glib::RefPtr< Gtk::Action > edit_select_all_action_;
+
+	Glib::RefPtr< Gtk::ToggleAction > view_main_toolbar_toggle_action_;
+	Glib::RefPtr< Gtk::ToggleAction > view_style_toolbar_toggle_action_;
+	Glib::RefPtr< Gtk::ToggleAction > view_text_format_toolbar_toggle_action_;
 
 	Glib::RefPtr< Gtk::ActionGroup > text_actiongroup_;
 	Glib::RefPtr< Gtk::ToggleAction > text_bold_action_;
@@ -107,6 +114,10 @@ private:
 	void onEditRedoAction();
 	void onEditSelectAllAction();
 	
+	void onViewMainToolbarToggleAction();
+	void onViewStyleToolbarToggleAction();
+	void onViewTextFormatToolbarToggleAction();
+
 	void onTextBoldAction();
 	void onTextItalicAction();
 	void onTextUnderlineAction();

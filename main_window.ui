@@ -93,6 +93,26 @@
 					</object>
 					<accelerator key="a" modifiers="GDK_CONTROL_MASK"/>
 				</child>
+				<child>
+					<object class="GtkAction" id="view_action">
+						<property name="label">_View</property>
+					</object>
+				</child>
+				<child>
+					<object class="GtkToggleAction" id="view_main_toolbar_action">
+						<property name="label">_Main toolbar</property>
+					</object>
+				</child>
+				<child>
+					<object class="GtkToggleAction" id="view_style_toolbar_action">
+						<property name="label">_Style toolbar</property>
+					</object>
+				</child>
+				<child>
+					<object class="GtkToggleAction" id="view_text_format_toolbar_action">
+						<property name="label">_Text format toolbar</property>
+					</object>
+				</child>
 			</object>
 		</child>
 		<ui>
@@ -119,6 +139,11 @@
 					<menuitem action="edit_delete_action" />
 					<separator />
 					<menuitem action="edit_select_all_action" />
+				</menu>
+				<menu name="view" action="view_action">
+					<menuitem action="view_main_toolbar_action" />
+					<menuitem action="view_style_toolbar_action" />
+					<menuitem action="view_text_format_toolbar_action" />
 				</menu>
 			</menubar>
 		</ui>
@@ -170,7 +195,7 @@
 						<property name="visible">True</property>
 						<property name="can_focus">False</property>
 						<child>
-							<object class="GtkToolbar" id="edit_toolbar">
+							<object class="GtkToolbar" id="main_toolbar">
 								<property name="visible">True</property>
 								<property name="can_focus">False</property>
 								<property name="show_arrow">False</property>
@@ -315,7 +340,7 @@
 							</packing>
 						</child>
 						<child>
-							<object class="GtkToolbar" id="stroke_fill_format_toolbar">
+							<object class="GtkToolbar" id="style_toolbar">
 								<property name="visible">True</property>
 								<property name="can_focus">False</property>
 								<property name="toolbar_style">icons</property>
