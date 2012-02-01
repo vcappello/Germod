@@ -138,15 +138,7 @@ int DocumentNotebook::getDiagramEditorPageNum(shared_ptr< cppgef::Diagram > diag
 {
 	for (int i=0; i < get_n_pages(); i++)
 	{
-		Gtk::ScrolledWindow* scrolled_window = dynamic_cast< Gtk::ScrolledWindow* >( get_nth_page (i) );
-		if (!scrolled_window)
-			return -1;
-
-		Gtk::Viewport* view_port = dynamic_cast< Gtk::Viewport* >( scrolled_window->get_child() );
-		if (!view_port)
-			return -1;
-
-		DiagramEditor* diagram_editor = dynamic_cast< DiagramEditor* >( view_port->get_child() );
+		DiagramEditor* diagram_editor = getDiagramEditor (i);
 		if (!diagram_editor)
 			return -1;
 
@@ -155,6 +147,21 @@ int DocumentNotebook::getDiagramEditorPageNum(shared_ptr< cppgef::Diagram > diag
 	}
 
 	return -1;
+}
+
+DiagramEditor* DocumentNotebook::getDiagramEditor(int page_num)
+{
+	Gtk::ScrolledWindow* scrolled_window = dynamic_cast< Gtk::ScrolledWindow* >( get_nth_page (page_num) );
+	if (!scrolled_window)
+		return 0;
+
+	Gtk::Viewport* view_port = dynamic_cast< Gtk::Viewport* >( scrolled_window->get_child() );
+	if (!view_port)
+		return 0;
+
+	DiagramEditor* diagram_editor = dynamic_cast< DiagramEditor* >( view_port->get_child() );
+
+	return diagram_editor;
 }
 
 Glib::ustring DocumentNotebook::getNotebookPageTitle(int nth_page)
@@ -264,10 +271,15 @@ void DocumentNotebook::closeNotebookPage(DiagramEditor* diagram_editor)
 
 	if (page_num != -1)
 	{
-		remove_page (page_num);
-
-		signal_document_closed_.emit();
+		closeNotebookPage (page_num);
 	}
+}
+
+void DocumentNotebook::closeNotebookPage(int page_num)
+{
+	remove_page (page_num);
+
+	signal_document_closed_.emit();
 }
 
 DocumentNotebook::signal_close_document_t DocumentNotebook::signalCloseDocument()

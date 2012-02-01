@@ -99,6 +99,8 @@ protected:
 	void promptSaveDiagram(DiagramEditor* diagram_editor, bool copy);
 	void closeDocument(DiagramEditor* diagram_editor);
 
+	bool closeAndPromptForSave();
+
 private:
 	// Signal handlers
 	void onFileNewAction();
@@ -108,6 +110,7 @@ private:
 	void onFileSaveACopyAction();
 	void onFileRevertToSavedAction();
 	void onFileCloseAction();
+	void onFileExitAction();
 	
 	void onEditCutAction();
 	void onEditCopyAction();
@@ -171,6 +174,8 @@ private:
 	void onFillColorChanged(cppgef::Color color);
 	void onFillColorNoColorSelected();
 	void onDashStyleSelected(std::vector< double > dash_style);
+
+	bool onWindowDeleteEvent(GdkEventAny* event);
 
 	void onCommandManagerCommandExecute(shared_ptr< cppgef::Diagram > diagram);
 	void onCommandManagerCommandUndo(shared_ptr< cppgef::Diagram > diagram);

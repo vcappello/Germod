@@ -23,12 +23,15 @@ public:
 	int getDiagramEditorPageNum(DiagramEditor* diagram_editor);
 	int getDiagramEditorPageNum(shared_ptr< cppgef::Diagram > diagram);
 
+	DiagramEditor* getDiagramEditor(int page_num);
+
 	Glib::ustring getNotebookPageTitle(int nth_page);
 
 	void setNotebookPageTitle(int nth_page, const std::string& file_name);
 
 	void setNotebookPageDirty(int nth_page, bool value);
 	
+	void closeNotebookPage(int page_num);
 	void closeNotebookPage(DiagramEditor* diagram_editor);
 
 	signal_close_document_t signalCloseDocument();

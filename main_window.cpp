@@ -96,7 +96,6 @@ MainWindow::MainWindow(BaseObjectType* cobject, const Glib::RefPtr<Gtk::Builder>
 	view_main_toolbar_toggle_action_->set_active (true);
 	view_style_toolbar_toggle_action_->set_active (true);
 	view_text_format_toolbar_toggle_action_->set_active (true);
-
 	
 	// Connect action signal handlers
 	file_new_action_->signal_activate().connect (
@@ -119,6 +118,9 @@ MainWindow::MainWindow(BaseObjectType* cobject, const Glib::RefPtr<Gtk::Builder>
 
 	file_close_action_->signal_activate().connect (
 		sigc::mem_fun(this, &MainWindow::onFileCloseAction));
+
+	file_exit_action_->signal_activate().connect (
+			sigc::mem_fun(this, &MainWindow::onFileExitAction));
 
 	edit_undo_action_->signal_activate().connect (
 		sigc::mem_fun(this, &MainWindow::onEditUndoAction));
@@ -234,6 +236,9 @@ MainWindow::MainWindow(BaseObjectType* cobject, const Glib::RefPtr<Gtk::Builder>
 		
 	fill_color_menu_toolbutton_->signalNoColorSelected().connect (
 		sigc::mem_fun( *this, &MainWindow::onFillColorNoColorSelected ));
+
+	this->signal_delete_event().connect(
+			sigc::mem_fun( *this, &MainWindow::onWindowDeleteEvent ));
 
 	// Other signals
 	cppgef::CommandManager::getInstance()->signalCommandExecute().connect (
@@ -380,6 +385,12 @@ void MainWindow::onFileCloseAction()
 		return;
 
 	closeDocument (active_diagram_editor);
+}
+
+void MainWindow::onFileExitAction()
+{
+	if (!closeAndPromptForSave())
+		this->hide();
 }
 
 void MainWindow::onEditUndoAction()
@@ -818,6 +829,33 @@ void MainWindow::closeDocument(DiagramEditor* diagram_editor)
 	}
 }
 
+bool MainWindow::closeAndPromptForSave()
+{
+	bool prev_lock = lock_open_blank_page_;
+	lock_open_blank_page_ = true;
+
+	while (diagrams_notebook_->get_n_pages() > 0)
+	{
+		int pages_count_before_close = diagrams_notebook_->get_n_pages();
+
+		DiagramEditor* diagram_editor = diagrams_notebook_->getDiagramEditor (0);
+
+		closeDocument (diagram_editor);
+
+		// If after close the page count is equal before the close
+		// the user select to cancel
+		if (pages_count_before_close == diagrams_notebook_->get_n_pages())
+		{
+			// Do not close the window if the user select cancel
+			lock_open_blank_page_ = prev_lock;
+			return true;
+		}
+	}
+
+	// Close the window
+	return false;
+}
+
 void MainWindow::onInsertShapeToolActionComplete()
 {
 	selection_toggleaction_->set_active (true);	
@@ -1048,6 +1086,11 @@ void MainWindow::onDashStyleSelected(std::vector< double > dash_style)
 		cppgef::Settings::getInstance()->setLineDashStyle (dash_style);
 		cppgef::Settings::getInstance()->setLineDashStyleOffset (0.0);
 	}	
+}
+
+bool MainWindow::onWindowDeleteEvent(GdkEventAny* event)
+{
+	return closeAndPromptForSave();
 }
 
 void MainWindow::onCommandManagerCommandExecute(shared_ptr< cppgef::Diagram > diagram)
