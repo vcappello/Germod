@@ -48,6 +48,12 @@ void DiagramEditor::initialize()
 	drawing_area_->signal_motion_notify_event().connect (sigc::mem_fun( *this, 
 		&DiagramEditor::onDrawingAreaMotionNotifyEvent ));
 	
+	drawing_area_->signal_key_press_event().connect (sigc::mem_fun( *this,
+		&DiagramEditor::onDrawingAreaKeyPressEvent ));
+
+	drawing_area_->signal_key_release_event().connect (sigc::mem_fun( *this,
+		&DiagramEditor::onDrawingAreaKeyReleaseEvent ));
+
 	drawing_area_->set_size_request (800, 600);
 	
 	this->set_size_request (800, 600);
@@ -56,7 +62,9 @@ void DiagramEditor::initialize()
 
 	//drawing_area_->set_size_request (400, 300);
 	
-	drawing_area_->add_events(Gdk::KEY_PRESS_MASK
+	drawing_area_->add_events(
+		Gdk::KEY_PRESS_MASK
+		| Gdk::KEY_RELEASE_MASK
 		| Gdk::BUTTON_PRESS_MASK
 		| Gdk::BUTTON_RELEASE_MASK
 		| Gdk::BUTTON_MOTION_MASK
@@ -306,6 +314,22 @@ bool DiagramEditor::onDrawingAreaExposeEvent(GdkEventExpose* event)
 		Toolset::getInstance()->getActiveTool()->expose (event, context);
 #endif		
 	}
+
+	return true;
+}
+
+bool DiagramEditor::onDrawingAreaKeyPressEvent(GdkEventKey* event)
+{
+	if (Toolset::getInstance()->hasActiveTool() && Toolset::getInstance()->getActiveTool()->keyPress (event, this))
+		drawing_area_->queue_draw();
+
+	return true;
+}
+
+bool DiagramEditor::onDrawingAreaKeyReleaseEvent(GdkEventKey* event)
+{
+	if (Toolset::getInstance()->hasActiveTool() && Toolset::getInstance()->getActiveTool()->keyRelease (event, this))
+		drawing_area_->queue_draw();
 
 	return true;
 }

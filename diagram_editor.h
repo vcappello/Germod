@@ -116,6 +116,8 @@ protected:
 	bool onDrawingAreaButtonPressEvent(GdkEventButton* event);
 	bool onDrawingAreaButtonReleaseEvent(GdkEventButton* event);
 	bool onDrawingAreaMotionNotifyEvent(GdkEventMotion* event);
+	bool onDrawingAreaKeyPressEvent(GdkEventKey* event);
+	bool onDrawingAreaKeyReleaseEvent(GdkEventKey* event);
 
 #ifdef GTKMM_3
 	bool onDrawingAreaDraw(const Cairo::RefPtr< Cairo::Context >& context);
