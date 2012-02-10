@@ -214,7 +214,7 @@ bool DiagramEditor::isDirty() const
 	shared_ptr< cppgef::Diagram > diagram = dynamic_pointer_cast< cppgef::Diagram >(
 			diagram_edit_part_->getModel() );
 
-	return !(cppgef::CommandManager::getInstance()->isUndoStackEmpty (diagram));
+	return !(cppgef::CommandManager::getInstance()->isReachedSavedState (diagram));
 }
 
 bool DiagramEditor::isEmpty() const
