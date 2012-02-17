@@ -89,7 +89,10 @@ void DiagramEditor::activateInplaceEditor(shared_ptr< cppgef::IInplaceEditor > e
 
 	editor->signalStopEdit().connect (
 		sigc::mem_fun( *this, &DiagramEditor::onInplaceEditorStopEdit ));
-		
+
+	editor->signalCancelEdit().connect (
+		sigc::mem_fun( *this, &DiagramEditor::onInplaceEditorCancelEdit ));
+
 	editor_widget->show();
 	editor_widget->grab_focus();
 
@@ -707,6 +710,11 @@ void DiagramEditor::onTextEditorUpdateStyle(const cppgef::TextFormat& text_forma
 void DiagramEditor::onInplaceEditorStopEdit()
 {
 	stopInplaceEditing();
+}
+
+void DiagramEditor::onInplaceEditorCancelEdit()
+{
+	cancelInplaceEditing();
 }
 
 void DiagramEditor::onSelectionChange(shared_ptr< cppgef::IEditPart > shape_edit_part)

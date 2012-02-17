@@ -109,6 +109,7 @@ protected:
 	signal_selection_change_t signal_selection_change_;
 	
 	sigc::connection editor_widget_focus_out_connection_;
+	sigc::connection editor_widget_cancel_connection_;
 	
 protected:
 	virtual void on_size_allocate(Gtk::Allocation& allocation);
@@ -130,6 +131,7 @@ protected:
 	void onTextEditorUpdateStyle(const cppgef::TextFormat& text_format);
 
 	void onInplaceEditorStopEdit();
+	void onInplaceEditorCancelEdit();
 	
 	void onSelectionChange(shared_ptr< cppgef::IEditPart > shape_edit_part);
 	
