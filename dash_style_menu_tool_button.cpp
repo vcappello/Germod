@@ -52,6 +52,9 @@ void DashStyleMenuToolButton::initialize()
 
 	dash_style_menu_->signalItemSelected().connect (
 		sigc::mem_fun( *this, &DashStyleMenuToolButton::onDashStyleSelected ));
+
+	this->signal_clicked().connect (
+		sigc::mem_fun( *this, &DashStyleMenuToolButton::onButtonClicked ));
 }
 
 DashStyleMenuToolButton::signal_dash_style_selected_t DashStyleMenuToolButton::signalDashStyleSelected()
@@ -79,3 +82,10 @@ void DashStyleMenuToolButton::onDashStyleSelected(menu_item_t dash_style)
 
 	signal_dash_style_selected_.emit (selected_dash_style_);
 }
+
+void DashStyleMenuToolButton::onButtonClicked()
+{
+	signal_dash_style_selected_.emit (selected_dash_style_);
+}
+
+

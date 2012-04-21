@@ -67,6 +67,7 @@ protected:
 	void drawImageSurface(const Cairo::RefPtr<Cairo::Context> context);
 
 	void onLineWidthSelected(menu_item_t width);
+	void onButtonClicked();
 };
 
 #endif /* LINE_WIDTH_MENU_TOOL_BUTTON_H_ */

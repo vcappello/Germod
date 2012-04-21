@@ -46,6 +46,9 @@ void LineWidthMenuToolButton::initialize()
 	
 	line_width_menu_->signalItemSelected().connect (
 		sigc::mem_fun( *this, &LineWidthMenuToolButton::onLineWidthSelected ));
+
+	this->signal_clicked().connect (
+		sigc::mem_fun( *this, &LineWidthMenuToolButton::onButtonClicked ));
 }
 
 LineWidthMenuToolButton::signal_line_width_selected_t LineWidthMenuToolButton::signalLineWidthSelected()
@@ -73,5 +76,11 @@ void LineWidthMenuToolButton::onLineWidthSelected(menu_item_t width)
 
 	signal_line_width_selected_.emit (selected_line_width_);
 }
+
+void LineWidthMenuToolButton::onButtonClicked()
+{
+	signal_line_width_selected_.emit (selected_line_width_);
+}
+
 
 

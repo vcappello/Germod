@@ -67,6 +67,7 @@ protected:
 	void drawImageSurface(const Cairo::RefPtr<Cairo::Context> context);
 
 	void onDashStyleSelected(menu_item_t dash_style);
+	void onButtonClicked();
 };
 
 #endif /* DASH_STYLE_MENU_TOOL_BUTTON_H_ */
