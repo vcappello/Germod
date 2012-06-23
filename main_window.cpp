@@ -30,6 +30,8 @@ MainWindow::MainWindow(BaseObjectType* cobject, const Glib::RefPtr<Gtk::Builder>
 	// Initialization	
 	current_status_label_->set_text (Glib::ustring());
 
+	tools_filter_entry_->set_icon_activatable (true, Gtk::ENTRY_ICON_SECONDARY);
+
 	text_color_menu_toolbutton_->initialize(
 		ColorMenu::DO_NOT_DISPLAY_NO_COLOR_ITEM,
 		ColorMenu::DO_NOT_ALLOW_ALPHA,
